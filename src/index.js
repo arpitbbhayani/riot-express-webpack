@@ -4,7 +4,12 @@ var redux = require('redux');
 require('./tags/hello-world.tag');
 
 var reducer = function(state = {title: "Hakuna Matata"}, action) {
-    return state;
+    switch(action.type) {
+        case 'CHANGE_TITLE':
+            return Object.assign({}, state, {title: action.data});
+        default:
+            return state;
+    }
 };
 
 var reduxStore = redux.createStore(reducer);

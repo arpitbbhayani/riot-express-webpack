@@ -55,7 +55,12 @@
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? { title: "Hakuna Matata" } : arguments[0];
 	    var action = arguments[1];
 
-	    return state;
+	    switch (action.type) {
+	        case 'CHANGE_TITLE':
+	            return Object.assign({}, state, { title: action.data });
+	        default:
+	            return state;
+	    }
 	};
 
 	var reduxStore = redux.createStore(reducer);
@@ -3690,7 +3695,10 @@
 
 	var riot = __webpack_require__(1);
 
-	riot.tag2('hello-world', '<h3>{this.opts.store.getState().title}</h3>', '', '', function(opts) {
+	riot.tag2('hello-world', '<h3>{this.opts.store.getState().title}</h3> <form onsubmit="{changeTitle}"> <input type="text" name="newTitle"> <input type="submit" value="change"> </form>', '', '', function(opts) {
+	    this.changeTitle = function() {
+	        this.opts.store.dispatch({type:'CHANGE_TITLE', data: this.newTitle.value})
+	    }.bind(this)
 	});
 
 
