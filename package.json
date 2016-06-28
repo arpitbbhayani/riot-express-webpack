@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "RiotJS + Webpack + Express + Babel + Semantic UI",
   "main": "app.js",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "",
   "license": "MIT",
   "dependencies": {
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
+    "redux": "^3.5.2",
     "riot": "^2.4.1"
   },
   "devDependencies": {
