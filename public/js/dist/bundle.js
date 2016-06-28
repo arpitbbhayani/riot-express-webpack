@@ -50,6 +50,7 @@
 	var redux = __webpack_require__(3);
 
 	__webpack_require__(17);
+	__webpack_require__(18);
 
 	var reducer = function reducer() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? { title: "Hakuna Matata" } : arguments[0];
@@ -66,7 +67,7 @@
 	var reduxStore = redux.createStore(reducer);
 
 	document.addEventListener('DOMContentLoaded', function () {
-	    riot.mount('hello-world', { store: reduxStore });
+	    riot.mount('*', { store: reduxStore });
 	});
 
 /***/ },
@@ -3695,12 +3696,40 @@
 
 	var riot = __webpack_require__(1);
 
-	riot.tag2('hello-world', '<h3>{this.opts.store.getState().title}</h3> <form onsubmit="{changeTitle}"> <input type="text" name="newTitle"> <input type="submit" value="change"> </form>', '', '', function(opts) {
+	riot.tag2('hello-world', '<h3>{this.opts.store.getState().title}</h3>', '', '', function(opts) {
+	        this.opts.store.subscribe(function() {
+	            this.update();
+	        }.bind(this));
+	});
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var riot = __webpack_require__(1);
+
+	riot.tag2('title-form', '<form onsubmit="{changeTitle}"> <input type="text" name="newTitle"> <input type="submit" value="change"> </form>', '', '', function(opts) {
+	    var actions = __webpack_require__(19);
 	    this.changeTitle = function() {
-	        this.opts.store.dispatch({type:'CHANGE_TITLE', data: this.newTitle.value})
+	        this.opts.store.dispatch(actions.changeTitle(this.newTitle.value));
 	    }.bind(this)
 	});
 
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	    changeTitle: changeTitle
+	};
+
+	function changeTitle(newTitle) {
+	    return { type: 'CHANGE_TITLE', data: newTitle };
+	}
 
 /***/ }
 /******/ ]);
